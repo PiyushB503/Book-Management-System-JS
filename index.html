@@ -1,44 +1,83 @@
-<!Doctype HTML>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Management System</title>
-    <style>
-        table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-        padding: 6px;
-        }
-
-        </style>
-</head>
-<body>
+  <head>
+    <title>BMS</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
     <div class="container">
-    <h1> Add a New Book</h1>
-    <div class="form-container">
-    <form>
-        <input type="hidden" id="editIndex" value="">
-        <label>Title:<br></label><input type="text" name="title" id="title"><br><br>
-        <label>Author:<br></label><input type="text" name="author" id="author"><br><br>
-        <label>ISBN:<br></label><input type="number" name="isbn" id="isbn"><br><br>
-        <label>Publication Date:<br></label><input type="date" name="pub_date" id="pub_date"><br><br>
-        <label>Genre:<br></label><input type="text" name="genre" id="genre"><br><br>
+      <h2 class="title">Book Management System</h2>
 
-        <button type="submit"> Add Book</button>
-    </form>
-</div>
- <h2>Lists of books</h2>
-    <table id="bookList">
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>ISBN</th>
-            <th>Publication Date</th>
-            <th>Genre</th>
-        </tr>
-    </table>
-</div>
-    <script src="script.js"></script>
-</body>
+      <div class="form-container">
+        <form id="formField">
+          <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" placeholder="Enter Title" name="title">
+          </div>
+
+          <div class="form-group">
+            <label for="author">Author:</label>
+            <input type="text" id="author" placeholder="Enter Author Name" name="author">
+          </div>
+
+          <div class="form-group">
+            <label for="isbn">ISBN:</label>
+            <input type="text" id="isbn" placeholder="Enter ISBN Number" name="isbn">
+          </div>
+
+          <div class="form-group">
+            <label for="publication_date">Publication Date:</label>
+            <input type="date" id="publication_date" name="publication_date">
+          </div>
+
+          <div class="form-group">
+            <label for="genre">Genre:</label>
+            <select id="genre" name="genre">
+              <option value="fiction">Fiction</option>
+              <option value="non-fiction">Non-Fiction</option>
+              <option value="science">Science</option>
+              <option value="biography">Biography</option>
+              <option value="fantasy">Fantasy</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="genre-filter">
+        <label for="genreFilter">Categorization by Genre:</label>
+        <select id="genreFilter">
+          <option value="all">All</option>
+          <option value="fiction">Fiction</option>
+          <option value="non-fiction">Non-Fiction</option>
+          <option value="science">Science</option>
+          <option value="biography">Biography</option>
+          <option value="fantasy">Fantasy</option>
+        </select>
+      </div>
+      <div class="table-container">
+        <table id="bookTable">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Author</th>
+              <th>ISBN</th>
+              <th>Publication Date</th>
+              <th>Genre</th>
+              <th>Age of Book</th>
+              <th>E/D</th>
+            </tr>
+          </thead>
+          <tbody id="bookTableBody">
+            <!-- Book entries will be dynamically inserted here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>

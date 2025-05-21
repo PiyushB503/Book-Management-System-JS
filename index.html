@@ -1,0 +1,44 @@
+<!Doctype HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Management System</title>
+    <style>
+        table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+        padding: 6px;
+        }
+
+        </style>
+</head>
+<body>
+    <div class="container">
+    <h1> Add a New Book</h1>
+    <div class="form-container">
+    <form>
+        <input type="hidden" id="editIndex" value="">
+        <label>Title:<br></label><input type="text" name="title" id="title"><br><br>
+        <label>Author:<br></label><input type="text" name="author" id="author"><br><br>
+        <label>ISBN:<br></label><input type="number" name="isbn" id="isbn"><br><br>
+        <label>Publication Date:<br></label><input type="date" name="pub_date" id="pub_date"><br><br>
+        <label>Genre:<br></label><input type="text" name="genre" id="genre"><br><br>
+
+        <button type="submit"> Add Book</button>
+    </form>
+</div>
+ <h2>Lists of books</h2>
+    <table id="bookList">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Publication Date</th>
+            <th>Genre</th>
+        </tr>
+    </table>
+</div>
+    <script src="script.js"></script>
+</body>
+</html>

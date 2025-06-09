@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",              // Target the latest ES features
+    "module": "ESNext",              // Use ES modules
+    "moduleResolution": "node",      // Use Node.js module resolution
+    "outDir": "./dist",              // Output directory for compiled files
+    "rootDir": "./src",              // Root directory for source files
+    "strict": true,                  // Enable strict type-checking options
+    "esModuleInterop": true,         // Allow interop with non-ES module imports
+    "resolveJsonModule": true,       // Enable support for importing JSON files
+    "skipLibCheck": true             // Skip checking of declaration files
+  },
+  "include": ["src/**/*"],           // Include all files under the 'src' directory
+  "exclude": ["node_modules"]        // Exclude node_modules
+}

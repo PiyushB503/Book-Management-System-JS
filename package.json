@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.7",
+    "fs.promises": "^0.1.2",
+    "tailwindcss": "^4.1.7",
+    "undici": "^7.10.0",
+    "winston": "^3.17.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  },
+  "scripts": {
+    "start": "http-server -a 0.0.0.0 -p 8000"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "http-server": "^14.1.1",
+    "typescript": "^5.8.3"
+  },
+  "name": "typescript-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module"
+}

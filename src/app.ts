@@ -1,106 +1,47 @@
-// src/app.ts (or wherever your BookManager is defined)
-import { BookService } from './services/bookService';
-import { displayBooks } from './book/BookDisplay';
-import { editBook } from './book/BookEdit';
-import { validateBookInput } from './utils/validaotor';
-import { IManualBookInput } from './interfaces/interface';
+import { validateBookInput } from '@utils/Validaotor';
+import { BookService } from './services/BookService';
+import { BookUI } from './UI/BookUI';
 
-class BookManager {
-  private bookService: BookService;
+const bookService = new BookService();
+const bookUI = new BookUI(bookService);
 
-  constructor() {
-    this.bookService = new BookService();
-    document.addEventListener("DOMContentLoaded", () => this.initialize());
+bookUI.bindEvents({
+  onFormSubmit: (book) => {
+    const validationErrors = validateBookInput(book);
+
+  if (validationErrors) {
+    alert(validationErrors); // or show in UI instead of alert
+    return;
   }
-
-  initialize(): void {
-    this.fetchBooksFromAPI();
-
-    const eventConfig = [
-      { id: "genreFilter", event: "change", handler: () => this.handleDisplayBooks() },
-      { id: "searchBtn", event: "click", handler: () => this.handleDisplayBooks() },
-      { id: "sortAscButton", event: "click", handler: () => this.sortBooksByAuthor("asc") },
-      { id: "sortDescButton", event: "click", handler: () => this.sortBooksByAuthor("desc") },
-      { id: "formField", event: "submit", handler: (e: Event) => this.handleFormSubmit(e) }
-    ];
-
-    eventConfig.forEach(({ id, event, handler }) => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.addEventListener(event, handler);
-      }
-    });
-
-    const tableBody = document.getElementById("bookTableBody");
-    if (tableBody) {
-      tableBody.addEventListener("click", (event) => {
-        const target = event.target as HTMLElement;
-        const isbn = target.closest("button")?.getAttribute("data-isbn");
-
-        if (!isbn) return;
-
-        if (target.classList.contains("edit-btn")) {
-          this.handleEdit(isbn);
-        } else if (target.classList.contains("delete-btn")) {
-          this.deleteBook(isbn);
-        }
-      });
+    bookService.addManualBook(book);
+    bookUI.renderBooks();
+  },
+  onEdit: (isbn) => {
+    const book = bookService.getBooks().find((b) => b.isbn === isbn);
+    if (book) bookUI.populateEditForm(book);
+  },
+  onDelete: (isbn) => {
+    const books = bookService.getBooks();
+    const index = books.findIndex((b) => b.isbn === isbn);
+    if (index !== -1) {
+      books.splice(index, 1);
+      bookUI.renderBooks();
     }
-  }
+  },
+  onFilter: () => bookUI.renderBooks(),
+  onSortAsc: () => {
+    const books = bookService.getBooks();
+    books.sort((a, b) => a.title.localeCompare(b.title));
+    bookUI.renderBooks();
+  },
+  onSortDesc: () => {
+    const books = bookService.getBooks();
+    books.sort((a, b) => b.title.localeCompare(a.title));
+    bookUI.renderBooks();
+  },
+});
 
-  fetchBooksFromAPI(): void {
-    this.bookService.fetchBooksFromAPI()
-      .then((books) => this.handleDisplayBooks())
-      .catch((err) => console.error("API Error:", err));
-  }
-
-  handleDisplayBooks(): void {
-    const books = this.bookService.getBooks();
-    displayBooks(books);
-  }
-
-  addBook(bookData: IManualBookInput): void {
-    const updatedBooks = this.bookService.addBook(bookData);
-    this.handleDisplayBooks();
-  }
-
-  deleteBook(isbn: string): void {
-    const updatedBooks = this.bookService.deleteBook(isbn);
-    this.handleDisplayBooks();
-  }
-
-  handleEdit(isbn: string): void {
-    editBook(isbn, this.bookService.getBooks());
-  }
-
-  sortBooksByAuthor(order: "asc" | "desc"): void {
-    const sortedBooks = this.bookService.sortBooksByAuthor(order);
-    this.handleDisplayBooks();
-  }
-
-  handleFormSubmit(event: Event): void {
-    event.preventDefault();
-
-    const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
-
-    const newBook: IManualBookInput = {
-      title: formData.get("title")?.toString().trim() || "",
-      author: formData.get("author")?.toString().trim() || "",
-      isbn: formData.get("isbn")?.toString().trim() || "",
-      publication_date: formData.get("publication_date")?.toString() || "",
-      genre: formData.get("genre")?.toString() || ""
-    };
-
-    const errors = validateBookInput(newBook);
-    if (errors) {
-      alert(errors);
-      return;
-    }
-
-    this.addBook(newBook);
-    form.reset();
-  }
-}
-
-const bookApp = new BookManager();
+// Fetch books from API and render
+bookService.fetchBooksFromAPI().then(() => {
+  bookUI.renderBooks();
+});

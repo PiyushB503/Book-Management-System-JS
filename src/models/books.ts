@@ -1,4 +1,5 @@
-import { IBook} from '../interfaces/interface';
+import { IBook } from "../interfaces/IBook";
+
 
 export class Book implements IBook {
   constructor(
@@ -12,9 +13,8 @@ export class Book implements IBook {
   ) {}
 
   getAge(): string {
-    const currentYear = new Date().getFullYear();
     const publishedYear = new Date(this.publication_date).getFullYear();
-    const age = currentYear - publishedYear;
+    const age = new Date().getFullYear() - publishedYear;
     return `${age} year${age !== 1 ? "s" : ""}`;
   }
 

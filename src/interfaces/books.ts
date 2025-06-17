@@ -4,7 +4,6 @@
     isbn: string;
     publication_date: string;
     genre: string;
-    isFavorite: boolean;
     price: string;
     // [key: string]: string;
     getAge(): string;
@@ -24,12 +23,6 @@ export interface IAuthor {
     birthYear ? : number;
     nationality ? : string;
     biography ? : string;
-}
-
-export interface ICategory {
-    name: string;
-    description ? : string;
-    parentCategory ? : string;
 }
 
 export interface VolumeInfo {

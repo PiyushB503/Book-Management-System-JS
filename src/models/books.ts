@@ -1,4 +1,5 @@
-import { IBook} from '../interfaces/interface';
+import { DISCOUNT_CONFIG } from 'config';
+import { IBook} from '../interfaces/books';
 
 export class Book implements IBook {
   constructor(
@@ -18,13 +19,18 @@ export class Book implements IBook {
     return `${age} year${age !== 1 ? "s" : ""}`;
   }
 
-  getDiscountedPrice(): string {
-    if (this.price === "Not for sale" || isNaN(parseFloat(this.price))) return "N/A";
-    const yearsOld = new Date().getFullYear() - new Date(this.publication_date).getFullYear();
-    if (yearsOld >= 5) {
-      const discounted = parseFloat(this.price) * 0.8;
-      return `${discounted.toFixed(2)} ${this.price.split(" ")[1] || ""}`;
-    }
-    return "No discount";
+getDiscountedPrice(): string {
+  if (this.price === "Not for sale" || isNaN(parseFloat(this.price))) return "N/A";
+
+  const yearsOld = new Date().getFullYear() - new Date(this.publication_date).getFullYear();
+
+  if (yearsOld >= DISCOUNT_CONFIG.THRESHOLD) {
+    const originalPrice = parseFloat(this.price);
+    const discounted = originalPrice * DISCOUNT_CONFIG.RATE;
+    const currency = this.price.split(" ")[1] || "";
+    return `${discounted.toFixed(2)} ${currency}`;
   }
+
+  return "No discount";
+}
 }

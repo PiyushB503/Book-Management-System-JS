@@ -1,5 +1,5 @@
 import { Book } from './books';
-import { VolumeInfo } from '../interfaces/interface';
+import { VolumeInfo } from '../interfaces/books';
 
 export class APIBook extends Book {
   constructor(volumeInfo: VolumeInfo) {

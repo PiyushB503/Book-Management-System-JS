@@ -1,4 +1,4 @@
-import { IBook } from "../interfaces/interface";
+import { IBook } from "../interfaces/books";
 import { displayBooks } from "./BookDisplay";
 
   export function editBook(isbn: string ,book: IBook[]): void {
@@ -13,5 +13,6 @@ import { displayBooks } from "./BookDisplay";
       (document.getElementById("genre") as HTMLSelectElement).value = b.genre;
       book.splice(index, 1);
       displayBooks(book);
+       alert("Book loaded for editing successfully!");
     }
   }

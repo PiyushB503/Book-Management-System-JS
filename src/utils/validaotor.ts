@@ -1,4 +1,4 @@
-import { IManualBookInput } from "../interfaces/interface";
+import { IManualBookInput } from "../interfaces/books";
 
 export function validateBookInput(book: IManualBookInput): string {
   let errors = "";
@@ -14,6 +14,7 @@ export function validateBookInput(book: IManualBookInput): string {
   if (new Date(book.publication_date) > new Date()) {
     errors += "Publication date cannot be in the future.\n";
   }
+  
 
   return errors;
 }

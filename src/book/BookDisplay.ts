@@ -1,5 +1,5 @@
-import { IBook } from "../interfaces/interface";
-import { filterItems } from "../utils/utils";
+import { IBook } from "../interfaces/books";
+import { filterItems } from "../utils/arrayUtils";
 
 export function displayBooks(book: IBook[]): void {
   const body = document.getElementById(

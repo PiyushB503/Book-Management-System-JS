@@ -1,10 +1,8 @@
-// src/app.ts (or wherever your BookManager is defined)
 import { BookService } from './services/bookService';
 import { displayBooks } from './book/BookDisplay';
 import { editBook } from './book/BookEdit';
 import { validateBookInput } from './utils/validaotor';
-import { IManualBookInput } from './interfaces/interface';
-
+import { IManualBookInput } from './interfaces/books';
 class BookManager {
   private bookService: BookService;
 
@@ -31,21 +29,28 @@ class BookManager {
       }
     });
 
-    const tableBody = document.getElementById("bookTableBody");
-    if (tableBody) {
-      tableBody.addEventListener("click", (event) => {
-        const target = event.target as HTMLElement;
-        const isbn = target.closest("button")?.getAttribute("data-isbn");
+const tableBody = document.getElementById("bookTableBody");
 
-        if (!isbn) return;
+if (tableBody) {
+  tableBody.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement;
+    const isbn = target.closest("button")?.getAttribute("data-isbn");
 
-        if (target.classList.contains("edit-btn")) {
-          this.handleEdit(isbn);
-        } else if (target.classList.contains("delete-btn")) {
-          this.deleteBook(isbn);
-        }
-      });
+    if (!isbn) return;
+
+    if (target.classList.contains("edit-btn")) {
+      this.handleEdit(isbn);
+    } else if (target.classList.contains("delete-btn")) {
+      const success = this.deleteBook(isbn);
+
+      if (success) {
+        alert("Book deleted successfully.");
+      } else {
+        alert("Failed to delete the book. Book not found.");
+      }
     }
+  });
+}
   }
 
   fetchBooksFromAPI(): void {
@@ -54,19 +59,23 @@ class BookManager {
       .catch((err) => console.error("API Error:", err));
   }
 
-  handleDisplayBooks(): void {
-    const books = this.bookService.getBooks();
-    displayBooks(books);
-  }
-
   addBook(bookData: IManualBookInput): void {
     const updatedBooks = this.bookService.addBook(bookData);
     this.handleDisplayBooks();
   }
 
-  deleteBook(isbn: string): void {
-    const updatedBooks = this.bookService.deleteBook(isbn);
+ deleteBook(isbn: string): boolean {
+  const success = this.bookService.deleteBook(isbn);
+
+  if (success) {
     this.handleDisplayBooks();
+  }
+
+  return success;
+}
+ handleDisplayBooks(): void {
+    const books = this.bookService.getBooks();
+    displayBooks(books);
   }
 
   handleEdit(isbn: string): void {

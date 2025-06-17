@@ -1,15 +1,22 @@
 // src/services/bookService.ts
-import { IBook, IManualBookInput, VolumeInfo } from '../interfaces/interface';
+import { IBook, IManualBookInput, VolumeInfo } from '../interfaces/books';
 import { ManualBook } from '../models/manual';
 import { APIBook } from '../models/apibook';
-import { sortItems } from '../utils/utils';
+import { sortItems } from '../utils/arrayUtils';
+import { BOOKS_API_URL } from '../config';
+
 
 export class BookService {
   private books: IBook[] = [];
 
   // Fetch books from API
   fetchBooksFromAPI(): Promise<IBook[]> {
-    const url = "https://www.googleapis.com/books/v1/volumes?q=subject:fiction";
+    const url =  BOOKS_API_URL;;
+
+     if (!url) {
+    console.error("BOOKS_API_URL is not defined");
+    return Promise.resolve([]);
+  }
     
     return fetch(url)
       .then((res) => res.json())
@@ -43,17 +50,26 @@ export class BookService {
   }
 
   // Delete a book by ISBN
-  deleteBook(isbn: string): IBook[] {
-    this.books = this.books.filter((b) => b.isbn !== isbn); // Filter out the book with the given ISBN
-    return this.books;
+ deleteBook(isbn: string): boolean {
+  const index = this.books.findIndex((b) => b.isbn === isbn);
+
+  if (index === -1) {
+    return false;
   }
 
+  this.books.splice(index, 1);
+  return true;
+}
+
   // Sort books by author
-  sortBooksByAuthor(order: "asc" | "desc"): IBook[] {
-    this.books = sortItems(this.books, (a, b) => a.author.localeCompare(b.author));
-    if (order === "desc") this.books.reverse();
-    return this.books;
-  }
+sortBooksByAuthor(order: "asc" | "desc"): IBook[] {
+  this.books = sortItems(this.books, (a, b) => {
+    return order === "asc"
+      ? a.author.localeCompare(b.author)
+      : b.author.localeCompare(a.author);
+  });
+  return this.books;
+}
 
   // Get all books
   getBooks(): IBook[] {

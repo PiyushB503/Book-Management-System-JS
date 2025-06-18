@@ -1,6 +1,6 @@
-import { IBookUI } from '../interfaces/IBookUI';
-import { IManualBookInput } from '../interfaces/IManualBookInput';
-import { BookService } from '../services/BookService';
+import { IBookUI } from '../interfaces/IBookUI.js';
+import { IManualBookInput } from '../interfaces/IManualBookInput.js';
+import { BookService } from '../services/bookService.js';
 
 export class BookUI implements IBookUI {
   constructor(private bookService: BookService) {}

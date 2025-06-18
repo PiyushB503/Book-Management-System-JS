@@ -1,5 +1,5 @@
-import { validateBookInput } from '@utils/Validaotor';
-import { BookService } from './services/BookService';
+import { validateBookInput } from './utils/validaotor';
+import { BookService } from './services/bookService';
 import { BookUI } from './UI/BookUI';
 
 const bookService = new BookService();

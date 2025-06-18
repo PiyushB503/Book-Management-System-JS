@@ -1,7 +1,7 @@
-import { IBook } from '../interfaces/IBook';
-import { IManualBookInput } from '../interfaces/IManualBookInput';
-import { APIBook } from '../models/APIBook';
-import { ManualBook } from '../models/manualBook';
+import { IBook } from '../interfaces/IBook.js';
+import { IManualBookInput } from '../interfaces/IManualBookInput.js';
+import { APIBook } from '../models/apibook.js';
+import { ManualBook } from '../models/manualBook.js';
 
 
 export class BookService {

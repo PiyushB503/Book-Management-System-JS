@@ -1,2 +1,9 @@
-# Ignore a directory
+# dependencies
 node_modules/
+
+# builds
+dist/
+build/
+
+# system
+.DS_Store

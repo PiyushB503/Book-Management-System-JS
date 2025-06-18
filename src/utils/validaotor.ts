@@ -1,4 +1,4 @@
-import { IManualBookInput } from "../interfaces/IManualBookInput";
+import { IManualBookInput } from "../interfaces/IManualBookInput.js";
 
 export function validateBookInput(book: IManualBookInput): string {
   let errors = "";

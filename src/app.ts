@@ -1,8 +1,8 @@
-import { BookService } from './services/bookService';
-import { displayBooks } from './book/BookDisplay';
-import { editBook } from './book/BookEdit';
-import { validateBookInput } from './utils/validaotor';
-import { IManualBookInput } from './interfaces/books';
+import { BookService } from './services/book.service';
+import { displayBooks } from './book/bookDisplay';
+import { editBook } from './book/bookEdit';
+import { validateBookInput } from './utils/validatorUtils';
+import { ManualBookInput } from './interfaces/books';
 class BookManager {
   private bookService: BookService;
 
@@ -59,7 +59,7 @@ if (tableBody) {
       .catch((err) => console.error("API Error:", err));
   }
 
-  addBook(bookData: IManualBookInput): void {
+  addBook(bookData: ManualBookInput): void {
     const updatedBooks = this.bookService.addBook(bookData);
     this.handleDisplayBooks();
   }
@@ -93,7 +93,7 @@ if (tableBody) {
     const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
 
-    const newBook: IManualBookInput = {
+    const newBook: ManualBookInput = {
       title: formData.get("title")?.toString().trim() || "",
       author: formData.get("author")?.toString().trim() || "",
       isbn: formData.get("isbn")?.toString().trim() || "",

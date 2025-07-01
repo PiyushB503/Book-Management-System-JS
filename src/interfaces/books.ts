@@ -1,4 +1,4 @@
- export interface IBook {
+ export interface Book {
     title: string;
     author: string;
     isbn: string;
@@ -10,7 +10,7 @@
     getDiscountedPrice(): string;
 }
 
-export interface IManualBookInput {
+export interface ManualBookInput {
     title: string;
     author: string;
     isbn: string;
@@ -18,7 +18,7 @@ export interface IManualBookInput {
     genre: string;
 }
 
-export interface IAuthor {
+export interface Author {
     fullName: string;
     birthYear ? : number;
     nationality ? : string;

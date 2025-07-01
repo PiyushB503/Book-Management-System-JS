@@ -1,16 +1,16 @@
 // src/services/bookService.ts
-import { IBook, IManualBookInput, VolumeInfo } from '../interfaces/books';
-import { ManualBook } from '../models/manual';
-import { APIBook } from '../models/apibook';
+import { Book, ManualBookInput, VolumeInfo } from '../interfaces/books';
+import { ManualBook } from '../models/manualBook';
+import { ApiBook } from '../models/apiBook';
 import { sortItems } from '../utils/arrayUtils';
 import { BOOKS_API_URL } from '../config';
 
 
 export class BookService {
-  private books: IBook[] = [];
+  private books: Book[] = [];
 
   // Fetch books from API
-  fetchBooksFromAPI(): Promise<IBook[]> {
+  fetchBooksFromAPI(): Promise<Book[]> {
     const url =  BOOKS_API_URL;;
 
      if (!url) {
@@ -21,7 +21,7 @@ export class BookService {
     return fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        const books: IBook[] = data.items.map((item: any) => {
+        const books: Book[] = data.items.map((item: any) => {
           const vi: VolumeInfo = item.volumeInfo;
           const si = item.saleInfo;
           let price = "Not for sale";
@@ -29,7 +29,7 @@ export class BookService {
             price = `${si.listPrice.amount} ${si.listPrice.currencyCode}`;
           }
           vi.price = price;
-          return new APIBook(vi);
+          return new ApiBook(vi);
         });
 
         this.books = this.books.concat(books); // Merge fetched books
@@ -42,7 +42,7 @@ export class BookService {
   }
 
   // Add a new book
-  addBook(bookData: IManualBookInput): IBook[] {
+  addBook(bookData: ManualBookInput): Book[] {
     const { title, author, isbn, publication_date, genre } = bookData;
     const book = new ManualBook(title, author, isbn, publication_date, genre);
     this.books.unshift(book); // Add book to the beginning of the array
@@ -62,7 +62,7 @@ export class BookService {
 }
 
   // Sort books by author
-sortBooksByAuthor(order: "asc" | "desc"): IBook[] {
+sortBooksByAuthor(order: "asc" | "desc"): Book[] {
   this.books = sortItems(this.books, (a, b) => {
     return order === "asc"
       ? a.author.localeCompare(b.author)
@@ -72,7 +72,7 @@ sortBooksByAuthor(order: "asc" | "desc"): IBook[] {
 }
 
   // Get all books
-  getBooks(): IBook[] {
+  getBooks(): Book[] {
     return this.books;
   }
 }

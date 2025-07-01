@@ -1,7 +1,7 @@
-import { IBook } from "../interfaces/books";
-import { displayBooks } from "./BookDisplay";
+import { Book } from "../interfaces/books";
+import { displayBooks } from "./bookDisplay";
 
-  export function editBook(isbn: string ,book: IBook[]): void {
+  export function editBook(isbn: string ,book: Book[]): void {
     const index = book.findIndex((b) => b.isbn === isbn);
     if (index !== -1) {
       const b = book[index];

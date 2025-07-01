@@ -1,6 +1,6 @@
-import { IManualBookInput } from "../interfaces/books";
+import { ManualBookInput } from "../interfaces/books";
 
-export function validateBookInput(book: IManualBookInput): string {
+export function validateBookInput(book: ManualBookInput): string {
   let errors = "";
 
   if (!book.title || !book.author || !book.isbn || !book.publication_date || !book.genre) {

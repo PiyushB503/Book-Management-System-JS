@@ -1,6 +1,6 @@
-import { Book } from './books';
+import { Books } from './books';
 
-export class ManualBook extends Book {
+export class ManualBook extends Books {
   constructor(
     title: string,
     author: string,

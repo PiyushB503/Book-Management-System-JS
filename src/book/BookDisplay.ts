@@ -1,7 +1,7 @@
-import { IBook } from "../interfaces/books";
+import { Book } from "../interfaces/books";
 import { filterItems } from "../utils/arrayUtils";
 
-export function displayBooks(book: IBook[]): void {
+export function displayBooks(book: Book[]): void {
   const body = document.getElementById(
     "bookTableBody"
   ) as HTMLTableSectionElement;

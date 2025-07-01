@@ -1,7 +1,7 @@
-import { Book } from './books';
+import { Books } from './books';
 import { VolumeInfo } from '../interfaces/books';
 
-export class APIBook extends Book {
+export class ApiBook extends Books {
   constructor(volumeInfo: VolumeInfo) {
     const title = volumeInfo.title || "N/A";
     const author = volumeInfo.authors?.join(", ") || "N/A";

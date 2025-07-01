@@ -1,7 +1,7 @@
 import { DISCOUNT_CONFIG } from 'config';
-import { IBook} from '../interfaces/books';
+import { Book} from '../interfaces/books';
 
-export class Book implements IBook {
+export class Books implements Book {
   constructor(
     public title: string,
     public author: string,

@@ -1,7 +1,9 @@
-import { IBook } from "../interfaces/IBook";
+import { PriceCalculator } from "interfaces/priceCalculator.js";
+import { Book } from "../interfaces/book.js";
+import { DiscountPriceCalculator } from "../services/discounted-price-calculator.service.js";
+import { RegularPriceCalculator } from "../services/regular-price-calculator.service.js";
 
-
-export class Book implements IBook {
+export class Books implements Book {
   constructor(
     public title: string,
     public author: string,
@@ -18,13 +20,10 @@ export class Book implements IBook {
     return `${age} year${age !== 1 ? "s" : ""}`;
   }
 
-  getDiscountedPrice(): string {
-    if (this.price === "Not for sale" || isNaN(parseFloat(this.price))) return "N/A";
+ getDiscountedPrice(): string {
     const yearsOld = new Date().getFullYear() - new Date(this.publication_date).getFullYear();
-    if (yearsOld >= 5) {
-      const discounted = parseFloat(this.price) * 0.8;
-      return `${discounted.toFixed(2)} ${this.price.split(" ")[1] || ""}`;
-    }
-    return "No discount";
+    const calculator: PriceCalculator =
+      yearsOld >= 5 ? new DiscountPriceCalculator() : new RegularPriceCalculator();
+    return calculator.calculate(this);
   }
 }

@@ -1,8 +1,8 @@
-import { IManualBookInput } from './IManualBookInput';
+import { ManualBookInput } from './manualBook';
 
-export interface IBookUI {
+export interface BookUI {
   bindEvents(callbacks: {
-    onFormSubmit: (book: IManualBookInput) => void;
+    onFormSubmit: (book: ManualBookInput) => void;
     onEdit: (isbn: string) => void;
     onDelete: (isbn: string) => void;
     onFilter: () => void;
@@ -10,5 +10,5 @@ export interface IBookUI {
     onSortDesc: () => void;
   }): void;
   renderBooks(): void;
-  populateEditForm(book: IManualBookInput): void;
+  populateEditForm(book: ManualBookInput): void;
 }
